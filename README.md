@@ -4,7 +4,7 @@
 SecBrowser is a security-focused browser that provides better protection from exploits, thereby reducing the risk of infection from malicious, arbitrary code. A built-in security slider provides enhanced usability, as website features which increase the attack surface (like JavaScript) can be easily disabled. Since many of the features that are commonly exploited in browsers are disabled by default, SecBrowser's attack surface is greatly reduced. Without any customization, SecBrowser’s default configuration offers better security than Firefox, Google Chrome or Microsoft Edge.<sup>[[1]](https://2019.www.torproject.org/projects/torbrowser/design/)</sup> It also provides better protections from [online tracking](https://www.whonix.org/wiki/Data_Collection_Techniques), [fingerprinting](http://www.whonix.org/wiki/Data_Collection_Techniques#Fingerprinting_of_Browser_.28HTTP.29_Header) and the linkability of activities across different websites. 
 
 
-SecBrowser is a derivative of the Tor Browser Bundle (which itself is a derivative of Mozilla Firefox) but without Tor. This means unlike Tor Browser, SecBrowser does _not_ route traffic over the Tor network, which in common parlance is referred to as "clearnet" traffic. Even without the aid of the Tor network, SecBrowser still benefits from the numerous [patches](https://gitweb.torproject.org/tor-browser.git) that Tor developers merged into the code base. Even with developer skills, these enhancements would be arduous and time consuming to duplicate in other browsers, with the outcome unlikely to match SecBrowser's many security benefits. While users can install browser extensions to mitigate specific attack vectors. Its unlikely to compare to SecBrowser which leverages the experience and know how of the Tor Project developers and the battle tested Tor Browser.
+SecBrowser is a derivative of the Tor Browser Bundle (which itself is a derivative of Mozilla Firefox) but without Tor. This means unlike Tor Browser, SecBrowser does _not_ route traffic over the Tor network, which in common parlance is referred to as "clearnet" traffic. Even without the aid of the Tor network, SecBrowser still benefits from the numerous [patches](https://gitweb.torproject.org/tor-browser.git) that Tor developers merged into the code base. Even with developer skills, these enhancements would be arduous and time consuming to duplicate in other browsers, with the outcome unlikely to match SecBrowser's many security benefits. While browser extensions can be installed to mitigate specific attack vectors, this ad hoc approach is insufficent. SecBrowser leverages the experience and knowledge of skilled Tor Project developers, and the battle-tested Tor Browser.
 
 ## Security Enhancements:
 
@@ -19,7 +19,7 @@ SecBrowser is a derivative of the Tor Browser Bundle (which itself is a derivati
 
 **Note: These instructions are for Qubes Debian buster or later only!**
 
-SecBrowser can be installed using [tb-updater](https://github.com/Whonix/tb-updater) which is a package developed and maintained by Whonix developers. When run, `tb-updater` seamlessly automates the download and verification of SecBrowser (from The Tor Project's website). Moreover, for users that have a requirement for a security focused clearnet browser (SecBrowser), `tb-updater` comes with the functionality to disable Tor prebuild into the software. To start SecBrowser users just need to start `secbrowser` from the start menu or command line. <sup>[[10]](https://forums.whonix.org/t/todo-research-and-document-how-to-use-tor-browser-for-security-not-anonymity-how-to-use-tbb-using-clearnet/3822/54)</sup> Unlike other methods that require users to manually disable Tor in Tor Browser, this greatly simplifies configuration and lessons the chances that a configuration error will be made.
+SecBrowser can be installed using [tb-updater](https://github.com/Whonix/tb-updater) which is a package developed and maintained by Whonix developers. When run, `tb-updater` seamlessly automates the download and verification of SecBrowser (from The Tor Project's website). One of the many benefits of `tb-updater` is the ability to disable Tor is prebuilt into the software. This improves usabilty and adds convient since a security focused clearnet browser (SecBrowser), is readily available. To start SecBrowser users can choose between the start menu, command line or creating a desktop starter. <sup>[[10]](https://forums.whonix.org/t/todo-research-and-document-how-to-use-tor-browser-for-security-not-anonymity-how-to-use-tbb-using-clearnet/3822/54)</sup> Unlike other manual methods of disabling Tor, this greatly simplifies the procedure and lessens the chance of a configuration error.
 
 ## Install tb-updater and tb-starter
 
@@ -96,7 +96,7 @@ To launch SecBrowser, run this command in a `dom0` terminal.
 
     qvm-run <appvm_name> secbrowser
 
-SecBrowser will have a red background with a message stating _"Something Went Wrong!" Tor is not working in this browser._ Which is what you want when using SecBrowser. If someone knows how to prevent this message, please contribute.
+SecBrowser will have a red background with a message stating _"Something Went Wrong!" Tor is not working in this browser._  This notice is related to Tor Browser (with Tor) and can be safely ignored . If someone knows how to prevent this message, please contribute.
 
 ## Normalizing SecBrowser behaviour (Security vs. Usability trade-off)
 
@@ -104,11 +104,11 @@ While SecBrowser has numerous security enhancements they can come at a cost of d
 
 Note: If users edit the TemplateVM to modify SecBrowser behavior, all AppVMs created thereafter will inherit those changes. However, AppVMs created prior to the aforementioned edits will not benefit from any changes to the SecBrowser configuration file in the TemplateVM.
 
-**Security Slider**: SecBrowser has a “Security Slider” in the shield menu that allows you to [increase security](https://tb-manual.torproject.org/security-settings/) by disabling certain web features that can be used to attack your security. By default, the Security Slider is set to "Standard" which is the lowest security level. Increasing SecBrowser's security level will prevent some web pages from functioning properly, so you should weigh your security needs against the degree of usability you require.
+**Security Slider**: SecBrowser has a “Security Slider” in the shield menu. This can [increase security](https://tb-manual.torproject.org/security-settings/) by disabling certain web features that are possible attack vectors. By default, the Security Slider is set to “Standard” which is the lowest security level. Increasing SecBrowser’s security level will prevent some web pages from functioning properly, so security needs must be weighed against the degree of usability that is required.
 
 **Private Browsing Mode**: In the default configuration Tor Browser has private browsing mode enabled. This setting prevents browsing and download history as well as cookies from remaining persistent across SecBrowser restarts. However, `tb-updater` includes a custom `user_pref` that disables private browsing mode when SecBrowser is used.
 
-When private browsing mode is disabled SecBrowser's built-in "long-term linkability" protections are deactivated. The user loses protection which aims to prevent for example, "activities from an earlier browser session from being linkable to a later session". If security is paramount users can enable private browsing mode by commenting out the corresponding user preference.
+When private browsing mode is disabled SecBrowser's built-in "long-term linkability" protections are deactivated. This means users are vulnerable to attacks which can link activities between earlier and later browsing sessions. If security is paramount users can enable private browsing mode by commenting out the corresponding user preference.
 
   In the AppVM, open the `user.js` configuration file in an editor.
 
@@ -116,7 +116,7 @@ When private browsing mode is disabled SecBrowser's built-in "long-term linkabil
 
   Next, comment out "//" `user_pref("browser.privatebrowsing.autostart", false);`.
 
-  When completed, the corresponding line should look like the following text block.
+  Check the text block is identical to the one below.
 
   ```
   // Normalize SecBrowser behavior
@@ -153,13 +153,11 @@ If you prefer to keep private browsing mode disabled, it may be advantageous to 
 
   Next, comment out "//" `user_pref("signon.rememberSignons", true);`
 
-  When completed, the corresponding line should look like the following text block.
-
-  ```
+  Check the text block is identical to the one below.
+   ```
   // Save passwords.
   //user_pref("signon.rememberSignons", true);
   ```
-
 ## FAQ
 
 **Whonix developers focus their efforts on advanced anonymity with Tor being a core component. Why develop a package that disables Tor?**
@@ -186,7 +184,7 @@ user_pref("network.proxy.socks_remote_dns", false);
 
 The SecBrowser also [sets various environment variables](https://github.com/Whonix/tb-starter/blob/master/usr/share/secbrowser/variables.bsh) when started by its [`/usr/bin/secbrowser`](https://github.com/Whonix/tb-starter/blob/master/usr/bin/secbrowser) wrapper.
 
-**Can I use the SecBrowser in a Whonix-Workstation VM (`anon-whonix`)?**
+**Can I use SecBrowser in a Whonix-Workstation VM (`anon-whonix`)?**
 
 VMs behind a `sys-whonix` are always routed through Tor, traffic would still be torified. However, this is strongly recommended against because using SecBrowser will break Tor Browser's per tab stream isolation.
 
@@ -204,7 +202,7 @@ Yes, but this could degrade security and privacy. See: Normalizing SecBrowser be
 
 **I have an idea to improve SecBrowser's security in Qubes. Can I submit a patch?**
 
-Many security enhancements such as in theory better compile time hardening options need to be submitted to upstream, The Tor Project. Patches to tb-updater, tb-starter or documentation are always welcome!
+Many security enhancements such as (in theory) adding compile time hardening options need to be submitted to upstream, The Tor Project. Patches to `tb-updater`, `tb-starter` or documentation are always welcome!
 
 ## Disclaimer
 
